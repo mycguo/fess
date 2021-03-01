@@ -331,6 +331,8 @@ public class Constants extends CoreLibConstants {
 
     public static final int DEFAULT_START_COUNT = 0;
 
+    public static final String PROCESS_TYPE_REPLACE = "R";
+
     public static final String PROCESS_TYPE_CRAWLING = "C";
 
     public static final String PROCESS_TYPE_DISPLAYING = "D";
@@ -449,4 +451,18 @@ public class Constants extends CoreLibConstants {
     public static final String XERCES_FEATURE_PREFIX = "http://apache.org/xml/features/";
 
     public static final String LOAD_EXTERNAL_DTD_FEATURE = "nonvalidating/load-external-dtd";
+
+    public static final String FESEN_TYPE_CLOUD = "cloud";
+
+    public static final String FESEN_USERNAME = "fesen.username";
+
+    public static final String FESEN_PASSWORD = "fesen.password";
+
+    public static final String EXECUTE_TYPE_CRAWLER = "crawler";
+
+    public static final String EXECUTE_TYPE_THUMBNAIL = "thumbnail";
+
+    public static final String EXECUTE_TYPE_PYTHON = "python";
+
+    public static final String EXECUTE_TYPE_SUGGEST = "suggest";
 }

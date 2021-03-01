@@ -338,7 +338,12 @@ public interface FessProp {
     }
 
     default boolean isResultCollapsed() {
-        return getSystemPropertyAsBoolean(Constants.RESULT_COLLAPSED_PROPERTY, false);
+        switch (getFesenType()) {
+        case Constants.FESEN_TYPE_CLOUD:
+            return false;
+        default:
+            return getSystemPropertyAsBoolean(Constants.RESULT_COLLAPSED_PROPERTY, false);
+        }
     }
 
     default void setLoginLinkEnabled(final boolean value) {
@@ -1035,10 +1040,7 @@ public interface FessProp {
                 return lang1;
             }
             final String lang2 = mapping.get(s.split("[\\-_]")[0]);
-            if (lang2 != null) {
-                return lang2;
-            }
-            return null;
+            return lang2;
         }).filter(StringUtil::isNotBlank).distinct().toArray(n -> new String[n]));
     }
 
@@ -2074,4 +2076,6 @@ public interface FessProp {
         return !split(getPasswordInvalidAdminPasswords(), "\n")
                 .get(stream -> stream.map(String::trim).filter(StringUtil::isNotEmpty).anyMatch(s -> s.equals(password)));
     }
+
+    String getFesenType();
 }

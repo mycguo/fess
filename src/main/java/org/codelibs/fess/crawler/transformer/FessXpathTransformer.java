@@ -98,7 +98,7 @@ public class FessXpathTransformer extends XpathTransformer implements FessTransf
 
     public boolean prunedContent = true;
 
-    public Map<String, String> convertUrlMap = new HashMap<>();
+    protected Map<String, String> convertUrlMap = new LinkedHashMap<>();
 
     protected FessConfig fessConfig;
 
@@ -741,15 +741,21 @@ public class FessXpathTransformer extends XpathTransformer implements FessTransf
     @Override
     protected List<RequestData> convertChildUrlList(final List<RequestData> urlList) {
         if (urlList != null) {
+            final PathMappingHelper pathMappingHelper = getPathMappingHelper();
             for (final RequestData requestData : urlList) {
                 String url = requestData.getUrl();
                 for (final Map.Entry<String, String> entry : convertUrlMap.entrySet()) {
                     url = url.replaceAll(entry.getKey(), entry.getValue());
                 }
+                url = pathMappingHelper.replaceUrl(url);
                 requestData.setUrl(replaceDuplicateHost(url));
             }
         }
         return urlList;
+    }
+
+    protected PathMappingHelper getPathMappingHelper() {
+        return ComponentUtil.getPathMappingHelper();
     }
 
     @Override
@@ -793,10 +799,8 @@ public class FessXpathTransformer extends XpathTransformer implements FessTransf
                 logger.debug("Add Child: {}", u);
             }
             urlList.add(u);
-        } else {
-            if (logger.isDebugEnabled()) {
-                logger.debug("Skip Child: {}", u);
-            }
+        } else if (logger.isDebugEnabled()) {
+            logger.debug("Skip Child: {}", u);
         }
     }
 
@@ -925,5 +929,13 @@ public class FessXpathTransformer extends XpathTransformer implements FessTransf
     public void addFieldRule(final String name, final String xpath, final boolean isPruned) {
         addFieldRule(name, xpath);
         fieldPrunedRuleMap.put(name, isPruned);
+    }
+
+    public void setConvertUrlMap(final Map<String, String> convertUrlMap) {
+        this.convertUrlMap.putAll(convertUrlMap);
+    }
+
+    public void addConvertUrl(final String regex, final String replacement) {
+        this.convertUrlMap.put(regex, replacement);
     }
 }

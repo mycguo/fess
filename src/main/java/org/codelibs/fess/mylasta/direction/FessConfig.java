@@ -25,8 +25,17 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
     /** The key of the configuration. e.g. Fess */
     String DOMAIN_TITLE = "domain.title";
 
+    /** The key of the configuration. e.g. default */
+    String ELASTICSEARCH_TYPE = "elasticsearch.type";
+
     /** The key of the configuration. e.g. http://localhost:9201 */
     String ELASTICSEARCH_HTTP_URL = "elasticsearch.http.url";
+
+    /** The key of the configuration. e.g.  */
+    String ELASTICSEARCH_USERNAME = "elasticsearch.username";
+
+    /** The key of the configuration. e.g.  */
+    String ELASTICSEARCH_PASSWORD = "elasticsearch.password";
 
     /** The key of the configuration. e.g. aes */
     String APP_CIPHER_ALGORISM = "app.cipher.algorism";
@@ -37,7 +46,7 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
     /** The key of the configuration. e.g. sha256 */
     String APP_DIGEST_ALGORISM = "app.digest.algorism";
 
-    /** The key of the configuration. e.g. .*password|.*key */
+    /** The key of the configuration. e.g. .*password|.*key|.*token|.*secret */
     String APP_ENCRYPT_PROPERTY_PATTERN = "app.encrypt.property.pattern";
 
     /** The key of the configuration. e.g.  */
@@ -716,6 +725,24 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
     image/jpeg=jpg
     */
     String INDEX_FILETYPE = "index.filetype";
+
+    /** The key of the configuration. e.g. {"source":{"index":"__SOURCE_INDEX__","size":100},"dest":{"index":"__DEST_INDEX__"},"script":{"source":"__SCRIPT_SOURCE__"}} */
+    String INDEX_REINDEX_BODY = "index.reindex.body";
+
+    /** The key of the configuration. e.g. -1 */
+    String INDEX_REINDEX_requests_per_second = "index.reindex.requests_per_second";
+
+    /** The key of the configuration. e.g. false */
+    String INDEX_REINDEX_REFRESH = "index.reindex.refresh";
+
+    /** The key of the configuration. e.g. 1m */
+    String INDEX_REINDEX_TIMEOUT = "index.reindex.timeout";
+
+    /** The key of the configuration. e.g. 5m */
+    String INDEX_REINDEX_SCROLL = "index.reindex.scroll";
+
+    /** The key of the configuration. e.g.  */
+    String INDEX_REINDEX_max_docs = "index.reindex.max_docs";
 
     /** The key of the configuration. e.g. 1000 */
     String QUERY_MAX_LENGTH = "query.max.length";
@@ -1677,12 +1704,49 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
     String getDomainTitle();
 
     /**
-     * Get the value for the key 'elasticsearch.http.url'. <br>
-     * The value is, e.g. http://localhost:9201 <br>
+     * Get the value for the key 'elasticsearch.type'. <br>
+     * The value is, e.g. default <br>
      * comment: Fesen
      * @return The value of found property. (NotNull: if not found, exception but basically no way)
      */
+    String getFesenType();
+
+    /**
+     * Get the value for the key 'elasticsearch.http.url'. <br>
+     * The value is, e.g. http://localhost:9201 <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
     String getFesenHttpUrl();
+
+    /**
+     * Get the value for the key 'elasticsearch.username'. <br>
+     * The value is, e.g.  <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getFesenUsername();
+
+    /**
+     * Get the value for the key 'elasticsearch.username' as {@link Integer}. <br>
+     * The value is, e.g.  <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     * @throws NumberFormatException When the property is not integer.
+     */
+    Integer getFesenUsernameAsInteger();
+
+    /**
+     * Get the value for the key 'elasticsearch.password'. <br>
+     * The value is, e.g.  <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getFesenPassword();
+
+    /**
+     * Get the value for the key 'elasticsearch.password' as {@link Integer}. <br>
+     * The value is, e.g.  <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     * @throws NumberFormatException When the property is not integer.
+     */
+    Integer getFesenPasswordAsInteger();
 
     /**
      * Get the value for the key 'app.cipher.algorism'. <br>
@@ -1708,7 +1772,7 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
 
     /**
      * Get the value for the key 'app.encrypt.property.pattern'. <br>
-     * The value is, e.g. .*password|.*key <br>
+     * The value is, e.g. .*password|.*key|.*token|.*secret <br>
      * @return The value of found property. (NotNull: if not found, exception but basically no way)
      */
     String getAppEncryptPropertyPattern();
@@ -3656,6 +3720,71 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
      * @return The value of found property. (NotNull: if not found, exception but basically no way)
      */
     String getIndexFiletype();
+
+    /**
+     * Get the value for the key 'index.reindex.body'. <br>
+     * The value is, e.g. {"source":{"index":"__SOURCE_INDEX__","size":100},"dest":{"index":"__DEST_INDEX__"},"script":{"source":"__SCRIPT_SOURCE__"}} <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getIndexReindexBody();
+
+    /**
+     * Get the value for the key 'index.reindex.requests_per_second'. <br>
+     * The value is, e.g. -1 <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getIndexReindexRequestsPerSecond();
+
+    /**
+     * Get the value for the key 'index.reindex.requests_per_second' as {@link Integer}. <br>
+     * The value is, e.g. -1 <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     * @throws NumberFormatException When the property is not integer.
+     */
+    Integer getIndexReindexRequestsPerSecondAsInteger();
+
+    /**
+     * Get the value for the key 'index.reindex.refresh'. <br>
+     * The value is, e.g. false <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getIndexReindexRefresh();
+
+    /**
+     * Is the property for the key 'index.reindex.refresh' true? <br>
+     * The value is, e.g. false <br>
+     * @return The determination, true or false. (if not found, exception but basically no way)
+     */
+    boolean isIndexReindexRefresh();
+
+    /**
+     * Get the value for the key 'index.reindex.timeout'. <br>
+     * The value is, e.g. 1m <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getIndexReindexTimeout();
+
+    /**
+     * Get the value for the key 'index.reindex.scroll'. <br>
+     * The value is, e.g. 5m <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getIndexReindexScroll();
+
+    /**
+     * Get the value for the key 'index.reindex.max_docs'. <br>
+     * The value is, e.g.  <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     */
+    String getIndexReindexMaxDocs();
+
+    /**
+     * Get the value for the key 'index.reindex.max_docs' as {@link Integer}. <br>
+     * The value is, e.g.  <br>
+     * @return The value of found property. (NotNull: if not found, exception but basically no way)
+     * @throws NumberFormatException When the property is not integer.
+     */
+    Integer getIndexReindexMaxDocsAsInteger();
 
     /**
      * Get the value for the key 'query.max.length'. <br>
@@ -6878,8 +7007,28 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
             return get(FessConfig.DOMAIN_TITLE);
         }
 
+        public String getFesenType() {
+            return get(FessConfig.ELASTICSEARCH_TYPE);
+        }
+
         public String getFesenHttpUrl() {
             return get(FessConfig.ELASTICSEARCH_HTTP_URL);
+        }
+
+        public String getFesenUsername() {
+            return get(FessConfig.ELASTICSEARCH_USERNAME);
+        }
+
+        public Integer getFesenUsernameAsInteger() {
+            return getAsInteger(FessConfig.ELASTICSEARCH_USERNAME);
+        }
+
+        public String getFesenPassword() {
+            return get(FessConfig.ELASTICSEARCH_PASSWORD);
+        }
+
+        public Integer getFesenPasswordAsInteger() {
+            return getAsInteger(FessConfig.ELASTICSEARCH_PASSWORD);
         }
 
         public String getAppCipherAlgorism() {
@@ -7876,6 +8025,42 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
 
         public String getIndexFiletype() {
             return get(FessConfig.INDEX_FILETYPE);
+        }
+
+        public String getIndexReindexBody() {
+            return get(FessConfig.INDEX_REINDEX_BODY);
+        }
+
+        public String getIndexReindexRequestsPerSecond() {
+            return get(FessConfig.INDEX_REINDEX_requests_per_second);
+        }
+
+        public Integer getIndexReindexRequestsPerSecondAsInteger() {
+            return getAsInteger(FessConfig.INDEX_REINDEX_requests_per_second);
+        }
+
+        public String getIndexReindexRefresh() {
+            return get(FessConfig.INDEX_REINDEX_REFRESH);
+        }
+
+        public boolean isIndexReindexRefresh() {
+            return is(FessConfig.INDEX_REINDEX_REFRESH);
+        }
+
+        public String getIndexReindexTimeout() {
+            return get(FessConfig.INDEX_REINDEX_TIMEOUT);
+        }
+
+        public String getIndexReindexScroll() {
+            return get(FessConfig.INDEX_REINDEX_SCROLL);
+        }
+
+        public String getIndexReindexMaxDocs() {
+            return get(FessConfig.INDEX_REINDEX_max_docs);
+        }
+
+        public Integer getIndexReindexMaxDocsAsInteger() {
+            return getAsInteger(FessConfig.INDEX_REINDEX_max_docs);
         }
 
         public String getQueryMaxLength() {
@@ -9594,11 +9779,14 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
         protected java.util.Map<String, String> prepareGeneratedDefaultMap() {
             java.util.Map<String, String> defaultMap = super.prepareGeneratedDefaultMap();
             defaultMap.put(FessConfig.DOMAIN_TITLE, "Fess");
+            defaultMap.put(FessConfig.ELASTICSEARCH_TYPE, "default");
             defaultMap.put(FessConfig.ELASTICSEARCH_HTTP_URL, "http://localhost:9201");
+            defaultMap.put(FessConfig.ELASTICSEARCH_USERNAME, "");
+            defaultMap.put(FessConfig.ELASTICSEARCH_PASSWORD, "");
             defaultMap.put(FessConfig.APP_CIPHER_ALGORISM, "aes");
             defaultMap.put(FessConfig.APP_CIPHER_KEY, "___change__me___");
             defaultMap.put(FessConfig.APP_DIGEST_ALGORISM, "sha256");
-            defaultMap.put(FessConfig.APP_ENCRYPT_PROPERTY_PATTERN, ".*password|.*key");
+            defaultMap.put(FessConfig.APP_ENCRYPT_PROPERTY_PATTERN, ".*password|.*key|.*token|.*secret");
             defaultMap.put(FessConfig.APP_EXTENSION_NAMES, "");
             defaultMap.put(FessConfig.JVM_CRAWLER_OPTIONS,
                     "-Djava.awt.headless=true\n-Dfile.encoding=UTF-8\n-Djna.nosys=true\n-Djdk.io.permissionsUseCanonicalPath=true\n-Dhttp.maxConnections=20\n-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager\n-server\n-Xms128m\n-Xmx512m\n-XX:MaxMetaspaceSize=128m\n-XX:CompressedClassSpaceSize=32m\n-XX:-UseGCOverheadLimit\n-XX:+UseTLAB\n-XX:+DisableExplicitGC\n-XX:-HeapDumpOnOutOfMemoryError\n-XX:-OmitStackTraceInFastThrow\n-XX:+UnlockExperimentalVMOptions\n-XX:+UseG1GC\n-XX:InitiatingHeapOccupancyPercent=45\n-XX:G1HeapRegionSize=1m\n-XX:MaxGCPauseMillis=60000\n-XX:G1NewSizePercent=5\n-XX:G1MaxNewSizePercent=5\n-Djcifs.smb.client.responseTimeout=30000\n-Djcifs.smb.client.soTimeout=35000\n-Djcifs.smb.client.connTimeout=60000\n-Djcifs.smb.client.sessionTimeout=60000\n-Djcifs.smb1.smb.client.connTimeout=60000\n-Djcifs.smb1.smb.client.soTimeout=35000\n-Djcifs.smb1.smb.client.responseTimeout=30000\n-Dgroovy.use.classvalue=true\n-Dio.netty.noUnsafe=true\n-Dio.netty.noKeySetOptimization=true\n-Dio.netty.recycler.maxCapacityPerThread=0\n-Dlog4j.shutdownHookEnabled=false\n-Dlog4j2.disable.jmx=true\n-Dlog4j.skipJansi=true\n-Dsun.java2d.cmm=sun.java2d.cmm.kcms.KcmsServiceProvider\n-Dorg.apache.pdfbox.rendering.UsePureJavaCMYKConversion=true\n");
@@ -9779,6 +9967,13 @@ public interface FessConfig extends FessEnv, org.codelibs.fess.mylasta.direction
             defaultMap.put(FessConfig.INDEX_INDICES_TIMEOUT, "1m");
             defaultMap.put(FessConfig.INDEX_FILETYPE,
                     "text/html=html\napplication/msword=word\napplication/vnd.openxmlformats-officedocument.wordprocessingml.document=word\napplication/vnd.ms-excel=excel\napplication/vnd.ms-excel.sheet.2=excel\napplication/vnd.ms-excel.sheet.3=excel\napplication/vnd.ms-excel.sheet.4=excel\napplication/vnd.ms-excel.workspace.3=excel\napplication/vnd.ms-excel.workspace.4=excel\napplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet=excel\napplication/vnd.ms-powerpoint=powerpoint\napplication/vnd.openxmlformats-officedocument.presentationml.presentation=powerpoint\napplication/vnd.oasis.opendocument.text=odt\napplication/vnd.oasis.opendocument.spreadsheet=ods\napplication/vnd.oasis.opendocument.presentation=odp\napplication/pdf=pdf\napplication/x-fictionbook+xml=fb2\napplication/e-pub+zip=epub\napplication/x-ibooks+zip=ibooks\ntext/plain=txt\napplication/rtf=rtf\napplication/vnd.ms-htmlhelp=chm\napplication/zip=zip\napplication/x-7z-comressed=7z\napplication/x-bzip=bz\napplication/x-bzip2=bz2\napplication/x-tar=tar\napplication/x-rar-compressed=rar\nvideo/3gp=3gp\nvideo/3g2=3g2\nvideo/x-msvideo=avi\nvideo/x-flv=flv\nvideo/mpeg=mpeg\nvideo/mp4=mp4\nvideo/ogv=ogv\nvideo/quicktime=qt\nvideo/x-m4v=m4v\naudio/x-aif=aif\naudio/midi=midi\naudio/mpga=mpga\naudio/mp4=mp4a\naudio/ogg=oga\naudio/x-wav=wav\nimage/webp=webp\nimage/bmp=bmp\nimage/x-icon=ico\nimage/x-icon=ico\nimage/png=png\nimage/svg+xml=svg\nimage/tiff=tiff\nimage/jpeg=jpg\n");
+            defaultMap.put(FessConfig.INDEX_REINDEX_BODY,
+                    "{\"source\":{\"index\":\"__SOURCE_INDEX__\",\"size\":100},\"dest\":{\"index\":\"__DEST_INDEX__\"},\"script\":{\"source\":\"__SCRIPT_SOURCE__\"}}");
+            defaultMap.put(FessConfig.INDEX_REINDEX_requests_per_second, "-1");
+            defaultMap.put(FessConfig.INDEX_REINDEX_REFRESH, "false");
+            defaultMap.put(FessConfig.INDEX_REINDEX_TIMEOUT, "1m");
+            defaultMap.put(FessConfig.INDEX_REINDEX_SCROLL, "5m");
+            defaultMap.put(FessConfig.INDEX_REINDEX_max_docs, "");
             defaultMap.put(FessConfig.QUERY_MAX_LENGTH, "1000");
             defaultMap.put(FessConfig.QUERY_TIMEOUT, "10000");
             defaultMap.put(FessConfig.QUERY_TIMEOUT_LOGGING, "true");
